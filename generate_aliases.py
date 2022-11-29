@@ -57,6 +57,7 @@ def main():
         ('sec', 'secret', ['g', 'd', 'rm'], None),
         ('no', 'nodes', ['g', 'd'], ['sys']),
         ('ns', 'namespaces', ['g', 'd', 'rm'], ['sys']),
+        ('np', 'networkpolicies.networking.k8s.io', ['g', 'd', 'rm'], None)
         ]
     res_types = [r[0] for r in res]
 
