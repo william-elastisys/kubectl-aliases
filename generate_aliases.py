@@ -42,7 +42,8 @@ def main():
         ('d', 'describe', None, None),
         ('rm', 'delete', None, None),
         ('run', 'run --rm --restart=Never --image-pull-policy=IfNotPresent -i -t', None, None),
-        ('c', 'create', None, ['sys'])
+        ('c', 'create', None, ['sys']),
+        ('n', 'config set-context --current --namespace', None, ['sys'])
     ]
 
     res = [
@@ -68,6 +69,7 @@ def main():
         ('sl', '--show-labels', ['g'], ['oyaml', 'ojson'], None),
         ('all', '--all', ['rm'], None), # caution: reusing the alias
         ('w', '--watch', ['g'], ['oyaml', 'ojson', 'owide']),
+        ('dry', '--dry-run=client -o yaml', ['c', 'run'], None)
     ]
 
     # these accept a value, so they need to be at the end and
