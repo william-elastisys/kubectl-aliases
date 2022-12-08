@@ -43,25 +43,27 @@ def main():
         ('rm',  'delete',                                                          None, None),
         ('run', 'run --rm --restart=Never --image-pull-policy=IfNotPresent -i -t', None, None),
         ('c',   'create',                                                          None, ['sys']),
-        ('n',   'config set-context --current --namespace',                        None, ['sys'])
+        ('n',   'config set-context --current --namespace',                        None, ['sys']),
+        ('e',   'edit',                                                            None, None)
     ]
 
     res = [
-        ('po',  'pods',                              ['g', 'd', 'rm'],      None),
-        ('dep', 'deployment',                        ['g', 'd', 'rm', 'c'], None),
-        ('sts', 'statefulset',                       ['g', 'd', 'rm', 'c'], None),
-        ('svc', 'service',                           ['g', 'd', 'rm', 'c'], None),
-        ('ing', 'ingress',                           ['g', 'd', 'rm', 'c'], None),
-        ('cm',  'configmap',                         ['g', 'd', 'rm', 'c'], None),
-        ('sec', 'secret',                            ['g', 'd', 'rm', 'c'], None),
-        ('no',  'nodes',                             ['g', 'd'],            ['sys']),
-        ('ns',  'namespaces',                        ['g', 'd', 'rm'],      ['sys']),
-        ('ns',  'namespace',                         ['c'],                 ['sys']),
-        ('np',  'networkpolicies.networking.k8s.io', ['g', 'd', 'rm', 'c'], None),
-        ('r',   'role',                              ['g', 'd', 'rm', 'c'], None),
-        ('rb',  'rolebinding',                       ['g', 'd', 'rm', 'c'], None),
-        ('cr',  'clusterrole',                       ['g', 'd', 'rm', 'c'], None),
-        ('crb', 'clusterrolebinding',                ['g', 'd', 'rm', 'c'], None)
+        ('po',  'pods',                              ['g', 'd', 'rm', 'e'],      None),
+        ('dep', 'deployment',                        ['g', 'd', 'rm', 'e', 'c'], None),
+        ('sts', 'statefulset',                       ['g', 'd', 'rm', 'e', 'c'], None),
+        ('svc', 'service',                           ['g', 'd', 'rm', 'e', 'c'], None),
+        ('ing', 'ingress',                           ['g', 'd', 'rm', 'e', 'c'], None),
+        ('cm',  'configmap',                         ['g', 'd', 'rm', 'e', 'c'], None),
+        ('sec', 'secret',                            ['g', 'd', 'rm', 'e', 'c'], None),
+        ('no',  'nodes',                             ['g', 'd'],                 ['sys']),
+        ('ns',  'namespaces',                        ['g', 'd', 'rm', 'e'],      ['sys']),
+        ('ns',  'namespace',                         ['e', 'c'],                 ['sys']),
+        ('np',  'networkpolicies.networking.k8s.io', ['g', 'd', 'rm', 'e', 'c'], None),
+        ('r',   'role',                              ['g', 'd', 'rm', 'e', 'c'], None),
+        ('rb',  'rolebinding',                       ['g', 'd', 'rm', 'e', 'c'], None),
+        ('cr',  'clusterrole',                       ['g', 'd', 'rm', 'e', 'c'], None),
+        ('crb', 'clusterrolebinding',                ['g', 'd', 'rm', 'e', 'c'], None),
+        ('sa',  'serviceaccount',                    ['g', 'd', 'rm', 'e', 'c'], None)
     ]
     res_types = [r[0] for r in res]
 
@@ -73,15 +75,16 @@ def main():
         ('sl',    '--show-labels',            ['g'],        ['oyaml', 'ojson'], None),
         ('all',   '--all',                    ['rm'],       None), # caution: reusing the alias
         ('w',     '--watch',                  ['g'],        ['oyaml', 'ojson', 'owide']),
-        ('dry',   '--dry-run=client -o yaml', ['c', 'run'], None)
+        ('dry',   '--dry-run=client -o yaml', ['c', 'run'], None),
+        ('t10',   '--tail=10',                ['lo'],       None)
     ]
 
     # these accept a value, so they need to be at the end and
     # mutually exclusive within each other.
     positional_args = [
-        ('f', '--recursive -f', ['g', 'd', 'rm'],                   res_types + ['all', 'l', 'sys']),
-        ('l', '-l',             ['g', 'd', 'rm'],                   ['f', 'all']),
-        ('n', '--namespace',    ['g', 'd', 'rm', 'lo', 'ex', 'pf'], ['ns', 'no', 'sys', 'all'])
+        ('f', '--recursive -f', ['g', 'd', 'rm'],                        res_types + ['all', 'l', 'sys']),
+        ('l', '-l',             ['g', 'd', 'rm'],                        ['f', 'all']),
+        ('n', '--namespace',    ['g', 'd', 'rm', 'lo', 'ex', 'pf', 'e'], ['ns', 'no', 'sys', 'all'])
     ]
 
     # [(part, optional, take_exactly_one)]
@@ -122,7 +125,9 @@ def main():
 
 def gen(parts):
     out = [()]
+    
     for (items, optional, take_exactly_one) in parts:
+        
         orig = list(out)
         combos = []
 
