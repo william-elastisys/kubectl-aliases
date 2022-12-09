@@ -30,21 +30,22 @@ def main():
     globs = [('sys', '--namespace=kube-system', None, ['sys'])]
 
     ops = [
-        ('a',   'apply --recursive -f',                                            None, None),
-        ('ak',  'apply -k',                                                        None, ['sys']),
-        ('k',   'kustomize',                                                       None, ['sys']),
-        ('ex',  'exec -i -t',                                                      None, None),
-        ('lo',  'logs -f',                                                         None, None),
-        ('lop', 'logs -f -p',                                                      None, None),
-        ('p',   'proxy',                                                           None, ['sys']),
-        ('pf',  'port-forward',                                                    None, ['sys']),
-        ('g',   'get',                                                             None, None),
-        ('d',   'describe',                                                        None, None),
-        ('rm',  'delete',                                                          None, None),
-        ('run', 'run --rm --restart=Never --image-pull-policy=IfNotPresent -i -t', None, None),
-        ('c',   'create',                                                          None, ['sys']),
-        ('n',   'config set-context --current --namespace',                        None, ['sys']),
-        ('e',   'edit',                                                            None, None)
+        ('a',    'apply --recursive -f',                                            None, None),
+        ('ak',   'apply -k',                                                        None, ['sys']),
+        ('k',    'kustomize',                                                       None, ['sys']),
+        ('ex',   'exec -i -t',                                                      None, None),
+        ('lo',   'logs -f',                                                         None, None),
+        ('lop',  'logs -f -p',                                                      None, None),
+        ('p',    'proxy',                                                           None, ['sys']),
+        ('pf',   'port-forward',                                                    None, ['sys']),
+        ('g',    'get',                                                             None, None),
+        ('d',    'describe',                                                        None, None),
+        ('rm',   'delete',                                                          None, None),
+        ('run',  'run --rm --restart=Never --image-pull-policy=IfNotPresent -i -t', None, None),
+        ('c',    'create',                                                          None, ['sys']),
+        ('n',    'config set-context --current --namespace',                        None, ['sys']),
+        ('e',    'edit',                                                            None, None),
+        ('alln', 'api-resources --verbs=list --namespaced -o name | xargs -n 1 kubectl get --show-kind --ignore-not-found -n', None, ['sys'])
     ]
 
     res = [
