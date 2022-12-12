@@ -19,11 +19,15 @@ from __future__ import print_function
 import itertools
 import os.path
 import sys
+import time
 
 xrange = range  # Python 3
 
 
 def main():
+    start = time.time()
+    time.sleep(3)
+
     # (alias, full, allow_when_oneof, incompatible_with)
     cmds = [('k', 'kubectl', None, None)]
 
@@ -45,7 +49,7 @@ def main():
         ('c',    'create',                                                          None, ['sys']),
         ('n',    'config set-context --current --namespace',                        None, ['sys']),
         ('e',    'edit',                                                            None, None),
-        ('alln', 'api-resources --verbs=list --namespaced -o name | xargs -n 1 kubectl get --show-kind --ignore-not-found -n', None, ['sys'])
+        ('all', 'api-resources --verbs=list --namespaced -o name | xargs -n 1 kubectl get --show-kind --ignore-not-found', None, ['sys'])
     ]
 
     res = [
@@ -64,7 +68,10 @@ def main():
         ('rb',  'rolebinding',                       ['g', 'd', 'rm', 'e', 'c'], None),
         ('cr',  'clusterrole',                       ['g', 'd', 'rm', 'e', 'c'], None),
         ('crb', 'clusterrolebinding',                ['g', 'd', 'rm', 'e', 'c'], None),
-        ('sa',  'serviceaccount',                    ['g', 'd', 'rm', 'e', 'c'], None)
+        ('sa',  'serviceaccount',                    ['g', 'd', 'rm', 'e', 'c'], None),
+        ('pv',  'persistentvolume',                  ['g', 'd', 'rm', 'e', 'c'], None),
+        ('pvc', 'persistentvolumeclaim',             ['g', 'd', 'rm', 'e', 'c'], None),
+        ('sm',  'servicemonitors',                   ['g', 'd', 'rm', 'e', 'c'], None)
     ]
     res_types = [r[0] for r in res]
 
@@ -83,9 +90,10 @@ def main():
     # these accept a value, so they need to be at the end and
     # mutually exclusive within each other.
     positional_args = [
-        ('f', '--recursive -f', ['g', 'd', 'rm'],                        res_types + ['all', 'l', 'sys']),
-        ('l', '-l',             ['g', 'd', 'rm'],                        ['f', 'all']),
-        ('n', '--namespace',    ['g', 'd', 'rm', 'lo', 'ex', 'pf', 'e'], ['ns', 'no', 'sys', 'all'])
+        ('f', '--recursive -f', ['g', 'd', 'rm'],                               res_types + ['all', 'l', 'sys']),
+        ('l', '-l',             ['g', 'd', 'rm'],                               ['f', 'all']),
+        ('n', '--namespace',    ['g', 'd', 'rm', 'lo', 'ex', 'pf', 'e', 'all'], ['ns', 'no', 'sys']),
+        ('t', '--tail',         ['lo'],                                         ['t10'])
     ]
 
     # [(part, optional, take_exactly_one)]
@@ -122,6 +130,9 @@ def main():
     for cmd in out:
         print(shellFormatting[shell].format(''.join([a[0] for a in cmd]),
               ' '.join([a[1] for a in cmd])))
+
+    m, s = divmod(int(time.time() - start), 60)
+    print("DONE: Generated", str(len(out)), "commands in", str(m), "minutes", str(s), "seconds", file=sys.stderr)
 
 
 def gen(parts):
