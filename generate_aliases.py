@@ -82,9 +82,9 @@ def main():
         ('all',   '--all-namespaces',         ['g', 'd'],   ['rm', 'f', 'no', 'sys']),
         ('sl',    '--show-labels',            ['g'],        ['oyaml', 'ojson'], None),
         ('all',   '--all',                    ['rm'],       None), # caution: reusing the alias
-        ('w',     '--watch',                  ['g'],        ['oyaml', 'ojson', 'owide']),
-        ('dry',   '--dry-run=client -o yaml', ['c', 'run'], None),
-        ('t10',   '--tail=10',                ['lo'],       None)
+        ('w',     '--watch',                  ['g'],        ['oyaml', 'ojson']),
+        ('dry',   '--dry-run=client -o yaml', ['c', 'run'], ['oyaml', 'ojson', 'owide', 'all', 'w', 'sl']),
+        ('t10',   '--tail=10',                ['lo'],       ['oyaml', 'ojson', 'owide', 'all', 'w', 'sl']),
     ]
 
     # these accept a value, so they need to be at the end and
@@ -137,9 +137,9 @@ def main():
 
 def gen(parts):
     out = [()]
-    
+    i = 0
     for (items, optional, take_exactly_one) in parts:
-        
+        i+=1
         orig = list(out)
         combos = []
 
@@ -150,6 +150,21 @@ def gen(parts):
             combos = combinations(items, 1, include_0=optional)
         else:
             combos = combinations(items, len(items), include_0=optional)
+            if i == 5:
+                valid_combos = []
+                for c in combos:
+                    found = False
+                    for arg in c:
+                        incompatibles = arg[3]
+                        if not incompatibles:
+                            continue
+                        for arg2 in c:
+                            if arg2[0] in incompatibles:
+                                found = True
+                    if not found:
+                        valid_combos.append(c)
+                combos = valid_combos
+
 
         # permutate the combinations if optional (args are not positional)
         if optional:
@@ -157,13 +172,13 @@ def gen(parts):
             for c in combos:
                 new_combos += list(itertools.permutations(c))
             combos = new_combos
-
         new_out = []
         for segment in combos:
             for stuff in orig:
                 if is_valid(stuff + segment):
                     new_out.append(stuff + segment)
         out = new_out
+        
     return out
 
 
