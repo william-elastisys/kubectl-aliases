@@ -20,6 +20,8 @@ import itertools
 import os.path
 import sys
 import time
+from shutil import which
+
 
 xrange = range  # Python 3
 
@@ -130,6 +132,8 @@ def main():
             print(f.read())
 
     for cmd in out:
+        if which('kubens') is not None and len(cmd) > 1 and cmd[1][0] == 'n':
+            cmd = (('k', 'kubens', None, None), ('n', '', None, None))
         print(shellFormatting[shell].format(''.join([a[0] for a in cmd]),
               ' '.join([a[1] for a in cmd])))
 
