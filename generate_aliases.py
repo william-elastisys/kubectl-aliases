@@ -125,6 +125,9 @@ def main():
 
     out = gen(parts)
 
+    # Special case commands :)
+    out.append((('kx', 'kubectx', None, None),))
+    
     # prepare output
     if not sys.stdout.isatty():
         header_path = \
