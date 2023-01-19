@@ -76,8 +76,8 @@ def main():
         ('pv',  'persistentvolume',                  ['g', 'd', 'rm', 'e', 'c'], None),
         ('pvc', 'persistentvolumeclaim',             ['g', 'd', 'rm', 'e', 'c'], None),
         ('sm',  'servicemonitors',                   ['g', 'd', 'rm', 'e', 'c'], None),
-        ('j',   'job',                               ['g', 'd', 'rm', 'e'],      None),
-        ('cj',   'cronjob',                          ['g', 'd', 'rm', 'e'],      None),
+        ('j',   'job',                               ['g', 'd', 'rm', 'e', 'c'], None),
+        ('cj',   'cronjob',                          ['g', 'd', 'rm', 'e', 'c'], None),
         ('a',   'all',                               ['g'],                      None)
     ]
     res_types = [r[0] for r in res]
