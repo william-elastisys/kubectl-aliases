@@ -32,7 +32,9 @@ def main():
 
     # (alias, full, allow_when_oneof, incompatible_with)
     cmds = [('k', 'kubectl', None, None)]
-
+    if which('kubecolor'):
+        cmds =[('k', 'kubecolor', None, None)]
+        
     globs = [('sys', '--namespace=kube-system', None, ['sys'])]
 
     ops = [
