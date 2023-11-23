@@ -75,7 +75,7 @@ def main():
         ('cr',  'clusterrole',                       ['g', 'd', 'rm', 'e', 'c'], None),
         ('crb', 'clusterrolebinding',                ['g', 'd', 'rm', 'e', 'c'], None),
         ('sa',  'serviceaccount',                    ['g', 'd', 'rm', 'e', 'c'], None),
-        ('pv',  'persistentvolume',                  ['g', 'd', 'rm', 'e', 'c'], None),
+        ('pv',  'persistentvolume',                  ['g', 'd', 'e', 'c'], None),
         ('pvc', 'persistentvolumeclaim',             ['g', 'd', 'rm', 'e', 'c'], None),
         ('sm',  'servicemonitors',                   ['g', 'd', 'rm', 'e', 'c'], None),
         ('j',   'job',                               ['g', 'd', 'rm', 'e', 'c'], None),
