@@ -34,7 +34,7 @@ def main():
     cmds = [('k', 'kubectl', None, None)]
     if which('kubecolor'):
         cmds =[('k', 'kubecolor', None, None)]
-        
+
     globs = [('sys', '--namespace=kube-system', None, ['sys'])]
 
     ops = [
@@ -82,6 +82,7 @@ def main():
         ('cj',  'cronjob',                           ['g', 'd', 'rm', 'e', 'c'], None),
         ('ep',  'endpoints',                         ['g', 'd', 'rm', 'e'],      None),
         ('cert','certificates',                      ['g', 'd', 'rm', 'e'],      None),
+        ('hpa', 'horizontalpodautoscalers',          ['g', 'd', 'rm', 'e'],      None),
         ('a',   'all',                               ['g'],                      None)
     ]
     res_types = [r[0] for r in res]
@@ -132,7 +133,7 @@ def main():
 
     # Special case commands :)
     out.append((('kx', 'kubectx', None, None),))
-    
+
     # prepare output
     if not sys.stdout.isatty():
         header_path = \
@@ -194,7 +195,7 @@ def gen(parts):
                 if is_valid(stuff + segment):
                     new_out.append(stuff + segment)
         out = new_out
-        
+
     return out
 
 
