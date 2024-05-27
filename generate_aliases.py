@@ -31,8 +31,10 @@ def main():
     time.sleep(3)
 
     # (alias, full, allow_when_oneof, incompatible_with)
+    kubecolor = which('kubecolor')
+
     cmds = [('k', 'kubectl', None, None)]
-    if which('kubecolor'):
+    if kubecolor:
         cmds =[('k', 'kubecolor', None, None)]
 
     globs = [('sys', '--namespace=kube-system', None, ['sys'])]
@@ -103,7 +105,7 @@ def main():
         ('all',   '--all-namespaces',         ['g', 'd'],   ['rm', 'f', 'no', 'sys']),
         ('sl',    '--show-labels',            ['g'],        ['oyaml', 'ojson'], None),
         ('all',   '--all',                    ['rm'],       None), # caution: reusing the alias
-        ('w',     '--watch',                  ['g'],        ['oyaml', 'ojson']),
+        ('w',     '--watch --force-colors' if kubecolor else '--watch',                  ['g'],        ['oyaml', 'ojson']),
         ('dry',   '--dry-run=client -o yaml', ['c', 'run'], ['oyaml', 'ojson', 'owide', 'all', 'w', 'sl']),
         ('t10',   '--tail=10',                ['lo'],       ['oyaml', 'ojson', 'owide', 'all', 'w', 'sl']),
     ]
