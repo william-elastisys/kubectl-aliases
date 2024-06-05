@@ -51,6 +51,9 @@ def main():
         ('g',    'get',                                                             None, None),
         ('d',    'describe',                                                        None, None),
         ('rm',   'delete',                                                          None, None),
+        ('ror',   'rollout restart',                                                None, None),
+        ('roh',   'rollout history',                                                None, None),
+        ('rou',   'rollout undo',                                                   None, None),
         ('run',  'run --rm --restart=Never --image-pull-policy=IfNotPresent -i -t', None, None),
         ('c',    'create',                                                          None, ['sys']),
         ('n',    'config set-context --current --namespace',                        None, ['sys']),
@@ -60,10 +63,10 @@ def main():
 
     res = [
         ('po',    'pods',                              ['g', 'd', 'rm', 'e'],      None),
-        ('dep',   'deployment',                        ['g', 'd', 'rm', 'e', 'c'], None),
-        ('ds',    'daemonset',                         ['g', 'd', 'rm', 'e', 'c'], None),
+        ('dep',   'deployment',                        ['g', 'd', 'rm', 'e', 'c', 'ror', 'roh', 'rou'], None),
+        ('ds',    'daemonset',                         ['g', 'd', 'rm', 'e', 'c', 'ror', 'roh', 'rou'], None),
         ('rs',    'replicaset',                        ['g', 'd', 'rm', 'e', 'c'], None),
-        ('sts',   'statefulset',                       ['g', 'd', 'rm', 'e', 'c'], None),
+        ('sts',   'statefulset',                       ['g', 'd', 'rm', 'e', 'c', 'ror', 'roh', 'rou'], None),
         ('svc',   'service',                           ['g', 'd', 'rm', 'e', 'c'], None),
         ('ing',   'ingress',                           ['g', 'd', 'rm', 'e', 'c'], None),
         ('cm',    'configmap',                         ['g', 'd', 'rm', 'e', 'c'], None),
@@ -100,8 +103,10 @@ def main():
 
     args = [
         ('oyaml', '-o=yaml',                  ['g'],        ['owide', 'ojson', 'sl']),
+        ('oyamlp', '-o=yaml --plain' if kubecolor else '-o=yaml',         ['g'],        ['owide', 'ojson', 'sl']), #remove kubecolor format
         ('owide', '-o=wide',                  ['g'],        ['oyaml', 'ojson']),
         ('ojson', '-o=json',                  ['g'],        ['owide', 'oyaml', 'sl']),
+        ('ojsonp', '-o=json --plain' if kubecolor else '-o=json',         ['g'],        ['owide', 'oyaml', 'sl']), #remove kubecolor format
         ('all',   '--all-namespaces',         ['g', 'd'],   ['rm', 'f', 'no', 'sys']),
         ('sl',    '--show-labels',            ['g'],        ['oyaml', 'ojson'], None),
         ('all',   '--all',                    ['rm'],       None), # caution: reusing the alias
