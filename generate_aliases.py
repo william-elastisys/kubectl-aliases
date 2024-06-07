@@ -102,11 +102,11 @@ def main():
     res_types = [r[0] for r in res]
 
     args = [
-        ('oyaml', '-o=yaml',                  ['g'],        ['owide', 'ojson', 'sl']),
-        ('oyamlp', '-o=yaml --plain' if kubecolor else '-o=yaml',         ['g'],        ['owide', 'ojson', 'sl']), #remove kubecolor format
+        ('oyaml', '-o=yaml',                  ['g'],        ['owide', 'ojson', 'sl', 'oyamlp', 'ojsonp']),
+        ('oyamlp', '-o=yaml --plain' if kubecolor else '-o=yaml',         ['g'],        ['owide', 'ojson', 'sl', 'ojsonp']), #remove kubecolor format
         ('owide', '-o=wide',                  ['g'],        ['oyaml', 'ojson']),
-        ('ojson', '-o=json',                  ['g'],        ['owide', 'oyaml', 'sl']),
-        ('ojsonp', '-o=json --plain' if kubecolor else '-o=json',         ['g'],        ['owide', 'oyaml', 'sl']), #remove kubecolor format
+        ('ojson', '-o=json',                  ['g'],        ['owide', 'oyaml', 'sl', 'oyamlp', 'ojsonp']),
+        ('ojsonp', '-o=json --plain' if kubecolor else '-o=json',         ['g'],        ['owide', 'oyaml', 'sl', 'oyamlp']), #remove kubecolor format
         ('all',   '--all-namespaces',         ['g', 'd'],   ['rm', 'f', 'no', 'sys']),
         ('sl',    '--show-labels',            ['g'],        ['oyaml', 'ojson'], None),
         ('all',   '--all',                    ['rm'],       None), # caution: reusing the alias
