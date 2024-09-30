@@ -98,6 +98,9 @@ def main():
         ('oc',    'openstackcluster',                  ['g', 'd', 'rm', 'e'],      None),
         ('om',    'openstackmachine',                  ['g', 'd', 'rm', 'e'],      None),
         ('omt',   'OpenStackMachineTemplate',          ['g', 'd', 'rm', 'e'],      None),
+        ('ac',    'azurecluster',                      ['g', 'd', 'rm', 'e'],      None),
+        ('am',    'azuremachine',                      ['g', 'd', 'rm', 'e'],      None),
+        ('amt',   'azureMachineTemplate',              ['g', 'd', 'rm', 'e'],      None),
     ]
     res_types = [r[0] for r in res]
 
