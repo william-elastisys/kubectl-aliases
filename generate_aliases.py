@@ -101,6 +101,7 @@ def main():
         ('ac',    '-n capi-cluster azurecluster',             ['g', 'd', 'rm', 'e'],      None),
         ('am',    '-n capi-cluster azuremachine',             ['g', 'd', 'rm', 'e'],      None),
         ('amt',   '-n capi-cluster azureMachineTemplate',     ['g', 'd', 'rm', 'e'],      None),
+        ('pdb',    'poddisruptionbudget',                     ['g', 'd', 'rm', 'e', 'c'], None),
     ]
     res_types = [r[0] for r in res]
 
